@@ -25,18 +25,31 @@
                             <i class="bi bi-house-door"></i> Home
                         </a>
                     </li>
-                    <li class="nav-item me-3">
-                        <span class="user-badge">
-                            <i class="bi bi-person-circle"></i> 
-                            <?php echo htmlspecialchars($userName); ?> 
-                            <small>(<?php echo ucfirst($userRole); ?>)</small>
-                        </span>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/logout" class="btn btn-logout">
-                            <i class="bi bi-box-arrow-right"></i> Salir
-                        </a>
-                    </li>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <li class="nav-item me-3">
+                            <span class="user-badge">
+                                <i class="bi bi-person-circle"></i> 
+                                <?php echo htmlspecialchars($userName); ?> 
+                                <small>(<?php echo ucfirst($userRole); ?>)</small>
+                            </span>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/logout" class="btn btn-logout">
+                                <i class="bi bi-box-arrow-right"></i> Salir
+                            </a>
+                        </li>
+                    <?php else: ?>
+                        <li class="nav-item me-2">
+                            <a href="/login" class="btn btn-outline-light">
+                                <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/register" class="btn btn-light">
+                                <i class="bi bi-person-plus"></i> Registrarse
+                            </a>
+                        </li>
+                    <?php endif; ?>
                 </ul>
             </div>
         </div>

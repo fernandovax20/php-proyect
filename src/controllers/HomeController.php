@@ -8,15 +8,12 @@ class HomeController {
     }
     
     public function index() {
-        // Verificar sesión
-        if (!isset($_SESSION['user_id'])) {
-            header('Location: /login');
-            exit;
-        }
-        
+        // Obtener productos para todos los visitantes
         $products = $this->productModel->getAll();
-        $userName = $_SESSION['user_name'] ?? 'Usuario';
-        $userRole = $_SESSION['user_role'] ?? 'cliente';
+        
+        // Variables para la vista (disponibles si el usuario está logueado)
+        $userName = $_SESSION['user_name'] ?? null;
+        $userRole = $_SESSION['user_role'] ?? null;
         
         require_once __DIR__ . '/../views/home.php';
     }

@@ -29,8 +29,11 @@ spl_autoload_register(function ($class) {
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = trim($uri, '/');
 
-// Verificar sesión para rutas protegidas
-if ($uri !== 'login' && $uri !== 'auth/login' && empty($_SESSION['user_id'])) {
+// Rutas públicas (no requieren autenticación)
+$publicRoutes = ['', 'home', 'login', 'auth/login', 'register', 'auth/register'];
+
+// Verificar sesión solo para rutas protegidas
+if (!in_array($uri, $publicRoutes) && empty($_SESSION['user_id'])) {
     header('Location: /login');
     exit;
 }
@@ -56,6 +59,16 @@ switch ($uri) {
     case 'logout':
         $controller = new AuthController();
         $controller->logout();
+        break;
+    
+    case 'register':
+        $controller = new AuthController();
+        $controller->register();
+        break;
+    
+    case 'auth/register':
+        $controller = new AuthController();
+        $controller->processRegister();
         break;
     
     default:
